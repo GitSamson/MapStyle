@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+  <title>英文、中英文地图</title>
+  <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+  <style>
+    html,
+    body,
+    #container {
+      width: 100%;
+      height: 100%;
+    }
+
+    #input-text {
+      margin-left: 1rem;
+      height: 2rem;
+      margin-right: 0rem;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='input-text'>
+    <input id=styleLink value="amap://styles/2e485a6653d8dfa7fa480688341faa87">
+    <button id='map-styles input' onclick=setMapStyle()>submit</button>
+    <button onclick=saveImg()>screenshot</button>
+    save as .jpeg
+  </div>
+
+
+
+  <div id="container"></div>
+
+  <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=4dd43279854ad939de97d9bdec9f57ae"></script>
+  <script>
+    //初始化地图
+    var map = new AMap.Map('container', {
+      resizeEnable: true, //是否监控地图容器尺寸变化
+      mapStyle: "amap://styles/2e485a6653d8dfa7fa480688341faa87"
+    });
+
+    function setMapStyle() {
+      var styleName = document.querySelectorAll('#styleLink')[0].value;
+      console.log(styleName);
+      map.setMapStyle(styleName);
+    }
+
+    function saveImg() {
+      var mycanvas = document.getElementsByClassName("amap-layer")[0];
+      var image = mycanvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+      var w = window.open('about:blank', 'image from canvas');
+      w.document.write("<img src='" + image + "' alt='from canvas'/>");
+    }
+  </script>
+</body>
+
+</html>
